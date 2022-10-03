@@ -1,0 +1,20 @@
+class Solution:
+    def averageOfLevels(self, root: Optional[TreeNode]) -> List[float]:
+        levels=dict()
+        def avg(list1):
+            return sum(list1)/len(list1)
+        def call(node,level):
+            if not node:
+                return
+            if level in levels:
+                levels[level].append(node.val)
+            else:
+                levels[level]=[node.val]
+            call(node.left,level+1)
+            call(node.right,level+1)
+        call(root,1)
+        ans=[]
+        for level in sorted(levels.keys()):
+            ans.append(avg(levels[level]))
+            
+        return ans
